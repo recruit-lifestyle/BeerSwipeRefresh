@@ -1,6 +1,6 @@
 # BeerSwipeRefreshLayout
 
-[![Release](https://img.shields.io/github/release/recruit-lifestyle/BeerSwipeRefresh.svg?label=maven version)](https://github.com/recruit-lifestyle/BeerSwipeRefresh)
+[![Release](https://img.shields.io/github/release/recruit-lifestyle/BeerSwipeRefresh.svg?label=maven version)](https://github.com/recruit-lifestyle/BeerSwipeRefresh)  
 This project aims to provide a reusable Swipe to Refresh widget for Android.
 
 
