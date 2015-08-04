@@ -26,7 +26,7 @@ repositories {
 }
 
 dependencies {
-  compile 'com.github.recruit-lifestyle:BeerSwipeRefresh:1.0'
+  compile 'com.github.recruit-lifestyle:BeerSwipeRefresh:1.1'
 }
 ```  
 
