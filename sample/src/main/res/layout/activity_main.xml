@@ -1,20 +1,41 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    android:orientation="vertical"
+    tools:context=".MainActivity"
+    >
 
-    <jp.co.recruit_lifestyle.android.widget.BeerSwipeRefreshLayout
+  <View
+      android:layout_width="match_parent"
+      android:layout_height="25dip"
+      android:background="@color/primary_dark"
+      />
+
+  <android.support.v7.widget.Toolbar
+      android:layout_height="wrap_content"
+      android:layout_width="match_parent"
+      android:minHeight="?attr/actionBarSize"
+      android:background="@color/primary"
+      android:id="@+id/toolbar"
+      />
+
+
+  <jp.co.recruit_lifestyle.android.widget.BeerSwipeRefreshLayout
+      android:layout_width="match_parent"
+      android:layout_height="match_parent"
+      android:layout_weight="1"
+      android:id="@+id/main_beer"
+      >
+
+    <ListView
+        android:id="@+id/main_list"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/main_beer_view"
-        >
+        />
 
-        <ListView
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:id="@+id/main_list"
-            />
-    </jp.co.recruit_lifestyle.android.widget.BeerSwipeRefreshLayout>
+  </jp.co.recruit_lifestyle.android.widget.BeerSwipeRefreshLayout>
 
-</RelativeLayout>
+</LinearLayout>

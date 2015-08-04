@@ -29,7 +29,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
-import android.widget.AbsListView;
 
 /**
  * @author amyu_san
@@ -96,7 +95,7 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
     final int childRight = thisWidth - getPaddingRight();
     final int childBottom = thisHeight - getPaddingBottom();
     mTarget.layout(getPaddingLeft(), getPaddingTop(), childRight, childBottom);
-    mBeerView.layout(l, t, r, b);
+    mBeerView.layout(getPaddingLeft(), getPaddingTop() + 30, childRight, childBottom + 30);
     mBeerView.bringToFront();
   }
 
@@ -107,6 +106,7 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
     mTarget.measure(
         makeMeasureSpecExactly(getMeasuredWidth() - (getPaddingLeft() + getPaddingRight())),
         makeMeasureSpecExactly(getMeasuredHeight() - (getPaddingTop() + getPaddingBottom())));
+    mBeerView.measure(widthMeasureSpec, heightMeasureSpec);
   }
 
   @Override protected void onAttachedToWindow() {
@@ -122,9 +122,10 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
   @Override public boolean onInterceptTouchEvent(MotionEvent event) {
     ensureTarget();
 
-    if (!isEnabled() || canChildScrollUp() || isRefreshing()) {
+    if (!isEnabled()) {
       return false;
     }
+
     if (mBeerView.isReverseAnimationRunning() || mBeerView.isMax()) {
       return false;
     }
@@ -159,8 +160,7 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
         final float yDiff = currentY - mFirstTouchDownPointY;
 
         // State is changed to drag if over slop
-        if (yDiff > ViewConfiguration.get(getContext())
-            .getScaledTouchSlop() && !isRefreshing()) {
+        if (yDiff > ViewConfiguration.get(getContext()).getScaledTouchSlop()) {
           return true;
         }
 
@@ -175,9 +175,11 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
   }
 
   @Override public boolean onTouchEvent(@NonNull MotionEvent event) {
-    if (!isEnabled() || canChildScrollUp() /*|| isRefreshing()*/) {
+    if (!isEnabled()) {
       return false;
     }
+
+
     if (mBeerView.isReverseAnimationRunning() || mBeerView.isMax()) {
       return false;
     }
@@ -206,6 +208,7 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
           mBeerView.drawGlass(0);
           return false;
         } else {
+          mBeerView.setAlpha(1);
           setRefreshing(true, true);
         }
         float touchMoveDegree = Math.max(-(diffY - mFirstTouchDownPointY) / 3, -110);
@@ -232,9 +235,6 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
         touchMoveDegree = Math.max(-(diffY - mFirstTouchDownPointY) / 3, -110);
         if (!isRefreshing()) {
           mBeerView.startDisappearAnimator();
-        }
-        if (touchMoveDegree > 0) {
-          return false;
         }
 
         mBeerView.startReverseBottleAnimator(touchMoveDegree);
@@ -333,24 +333,6 @@ public class BeerSwipeRefreshLayout extends ViewGroup implements SensorEventList
 
     if (mTarget == null) {
       throw new IllegalStateException("This view must have at least one AbsListView");
-    }
-  }
-
-  public boolean canChildScrollUp() {
-    if (mTarget == null) {
-      return false;
-    }
-
-    if (android.os.Build.VERSION.SDK_INT < 14) {
-      if (mTarget instanceof AbsListView) {
-        final AbsListView absListView = (AbsListView) mTarget;
-        return absListView.getChildCount() > 0 && (absListView.getFirstVisiblePosition() > 0
-            || absListView.getChildAt(0).getTop() < absListView.getPaddingTop());
-      } else {
-        return mTarget.getScrollY() > 0;
-      }
-    } else {
-      return ViewCompat.canScrollVertically(mTarget, -1);
     }
   }
 
