@@ -6,8 +6,8 @@ This project aims to provide a reusable Swipe to Refresh widget for Android.
 
 
 ##Screenshots
-*Watch YouTube video [here](https://www.youtube.com/watch?v=ZIBP56GboX0).*
-
+*Watch YouTube video [here](https://www.youtube.com/watch?v=ZIBP56GboX0).*  
+![](./sc/animation_beer.gif)  
 <img src="./sc/sc1.png" width="200">
 <img src="./sc/sc2.png" width="200">
 <img src="./sc/sc3.png" width="200">
